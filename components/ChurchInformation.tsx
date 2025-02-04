@@ -15,7 +15,7 @@ export default function ChurchInformation() {
   return (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="homeChurchName">Home Church Name</Label>
+      <Label htmlFor="homeChurchName">Home Church Name</Label>
         <Input
           type="text"
           id="homeChurchName"
@@ -26,7 +26,7 @@ export default function ChurchInformation() {
         />
       </div>
       <div>
-        <Label htmlFor="pastorName">Pastor's Name</Label>
+      <Label htmlFor="pastorName">Pastor&amp;apos;s Name</Label>
         <Input
           type="text"
           id="pastorName"
