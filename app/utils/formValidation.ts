@@ -11,8 +11,9 @@ interface FormData {
   yearStarted?: string;
   professionalQualifications?: string;
   membershipCategory?: string;
-  [key: string]: any; // Index signature for dynamic access
+  [key: string]: string | number | boolean | undefined; // Restrict dynamic properties
 }
+
 
 export const validateForm = (formData: FormData) => {
   const errors: { [key: string]: string } = {};
