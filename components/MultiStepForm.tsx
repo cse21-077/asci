@@ -1,15 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { useFormContext } from "../app/contexts/FormContext"
+import { useFormContext, MultiStepFormProps } from "../app/contexts/FormContext"
 import { Button } from "@/components/ui/button"
 import { validateForm } from "../app/utils/formValidation"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-// ... (previous imports and type definitions)
-
 export default function MultiStepForm({ steps, onSubmit }: MultiStepFormProps) {
-  const { formData, updateFormData, currentStep, setCurrentStep } = useFormContext()
+  const { formData, currentStep, setCurrentStep } = useFormContext()
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
   const CurrentStepComponent = steps[currentStep].component
@@ -36,7 +34,7 @@ export default function MultiStepForm({ steps, onSubmit }: MultiStepFormProps) {
     setErrors(formErrors)
 
     if (Object.keys(formErrors).length === 0) {
-      onSubmit()
+      onSubmit?.()
     }
   }
 
@@ -46,10 +44,14 @@ export default function MultiStepForm({ steps, onSubmit }: MultiStepFormProps) {
         <h2 className="text-2xl font-bold mb-4">{steps[currentStep].title}</h2>
         <div className="flex mb-4">
           {steps.map((step, index) => (
-            <div key={index} className={`flex-1 h-2 ${index <= currentStep ? "bg-blue-500" : "bg-gray-200"}`} />
+            <div 
+              key={index} 
+              className={`flex-1 h-2 ${index <= currentStep ? "bg-blue-500" : "bg-gray-200"}`} 
+            />
           ))}
         </div>
       </div>
+
       {Object.keys(errors).length > 0 && (
         <Alert variant="destructive" className="mb-4">
           <AlertTitle>Error</AlertTitle>
@@ -63,7 +65,9 @@ export default function MultiStepForm({ steps, onSubmit }: MultiStepFormProps) {
           </AlertDescription>
         </Alert>
       )}
+
       <CurrentStepComponent />
+
       <div className="mt-8 flex justify-between">
         {currentStep > 0 && <Button onClick={handlePrevious}>Previous</Button>}
         {currentStep < steps.length - 1 ? (
@@ -75,4 +79,3 @@ export default function MultiStepForm({ steps, onSubmit }: MultiStepFormProps) {
     </div>
   )
 }
-

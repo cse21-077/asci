@@ -6,13 +6,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   Select,
-  SelectGroup,
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectLabel,
   SelectItem,
-  SelectSeparator,
 } from "@/components/ui/select"
 
 export default function CommonFields() {
@@ -41,7 +38,10 @@ export default function CommonFields() {
       </div>
       <div>
         <Label htmlFor="title">Title</Label>
-        <Select name="title" value={formData.title || ""} onValueChange={(value) => updateFormData({ title: value })}>
+        <Select 
+          value={formData.title || ""} 
+          onValueChange={(value) => updateFormData({ title: value })}
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select a title" />
           </SelectTrigger>
@@ -77,10 +77,15 @@ export default function CommonFields() {
       </div>
       <div>
         <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" name="email" value={formData.email || ""} onChange={handleChange} required />
+        <Input 
+          type="email" 
+          id="email" 
+          name="email" 
+          value={formData.email || ""} 
+          onChange={handleChange} 
+          required 
+        />
       </div>
-      {/* Add more fields for phone numbers, email, website, Skype, and address */}
     </div>
   )
 }
-

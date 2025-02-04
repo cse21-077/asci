@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
       <Image src="/asi.png" alt="ASI Logo" width={200} height={100} className="mb-8" />
       <h1 className="text-4xl font-bold mb-4 text-center">ASI Membership Application</h1>
       <p className="text-xl mb-8 text-center max-w-2xl">

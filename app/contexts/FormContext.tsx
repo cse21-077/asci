@@ -2,19 +2,43 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react"
 
+// Comprehensive FormState interface that includes all fields
 interface FormState {
+  // Base application fields
   applicationType: "individual" | "organization" | ""
   membershipCategory: string
   organizationCategory: string
   employeeCount: string
   employeeCountExact: string
+  
+  // Personal information fields
   firstName: string
   surname: string
   professionalQualifications: string
+  title?: string
+  email?: string
+  dateOfApplication?: string
+
+  // Organization fields
   organizationName: string
   businessType: string
   yearStarted: string
-  // Add any other fields that are used in your form
+
+  // Church-specific fields
+  homeChurchName?: string
+  pastorName?: string
+
+  // Add any other fields that might be used in the form
+  [key: string]: string | undefined
+}
+
+// Define MultiStepFormProps with optional onSubmit
+interface MultiStepFormProps {
+  steps: Array<{
+    title: string
+    component: React.ComponentType
+  }>
+  onSubmit?: () => void
 }
 
 interface FormContextType {
@@ -25,6 +49,7 @@ interface FormContextType {
   calculateMembershipFee: () => number
 }
 
+// Default form state with all potential fields
 const defaultFormState: FormState = {
   applicationType: "",
   membershipCategory: "",
@@ -37,7 +62,11 @@ const defaultFormState: FormState = {
   organizationName: "",
   businessType: "",
   yearStarted: "",
-  // Initialize any other fields with empty strings or appropriate default values
+  title: "",
+  email: "",
+  dateOfApplication: new Date().toISOString().split("T")[0],
+  homeChurchName: "",
+  pastorName: "",
 }
 
 const FormContext = createContext<FormContextType | undefined>(undefined)
@@ -49,7 +78,7 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedData = localStorage.getItem("asiMembershipForm")
     if (savedData) {
-      setFormData(JSON.parse(savedData))
+      setFormData({ ...defaultFormState, ...JSON.parse(savedData) })
     }
   }, [])
 
@@ -99,17 +128,17 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-      <FormContext.Provider
-          value={{
-            formData,
-            updateFormData,
-            currentStep,
-            setCurrentStep,
-            calculateMembershipFee,
-          }}
-      >
-        {children}
-      </FormContext.Provider>
+    <FormContext.Provider
+      value={{
+        formData,
+        updateFormData,
+        currentStep,
+        setCurrentStep,
+        calculateMembershipFee,
+      }}
+    >
+      {children}
+    </FormContext.Provider>
   )
 }
 
@@ -121,3 +150,5 @@ export const useFormContext = () => {
   return context
 }
 
+// Export types for use in other components
+export type { FormState, MultiStepFormProps }

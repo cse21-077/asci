@@ -36,8 +36,6 @@ export default function ChurchInformation() {
           required
         />
       </div>
-      {/* Add more fields for pastor's contact, church address, and local union/conference/field */}
     </div>
   )
 }
-
